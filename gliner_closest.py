@@ -7,33 +7,48 @@ model = GLiNER.from_pretrained("urchade/gliner_multi")
 tokenizer = AutoTokenizer.from_pretrained("xlm-roberta-base")
 
 # Constants
-MAX_TOKENS = 510
-OVERLAP = 60
+MAX_TOKENS = 510  # Adjusted token limit
+TARGET_WORDS = ['rixe', 'bagarre']
 
-def tokenize_to_chunks(text, max_tokens=MAX_TOKENS, overlap=OVERLAP):
-    tokens = tokenizer(text, return_offsets_mapping=True, add_special_tokens=False, truncation=False)
-    input_ids = tokens["input_ids"]
-    offsets = tokens["offset_mapping"]
-    
+# Function for chunking around anchor words
+def anchor_chunks(text, targets=TARGET_WORDS, max_tokens=MAX_TOKENS):
+    words = text.split()
+    target_indices = [i for i, w in enumerate(words) if w.lower() in targets]
     chunks = []
-    start = 0
     
-    while start < len(input_ids):
-        end = min(start + max_tokens, len(input_ids))
-        chunk_ids = input_ids[start:end]
-        chunk_text = tokenizer.decode(chunk_ids, skip_special_tokens=True, clean_up_tokenization_spaces=True)
-        chunks.append(chunk_text)
+    # If no target words found, we still split the text into chunks of max length
+    if not target_indices:
+        tokens = tokenizer(text, return_offsets_mapping=True, add_special_tokens=False, truncation=False)
+        input_ids = tokens["input_ids"]
+        for start in range(0, len(input_ids), max_tokens):
+            end = min(start + max_tokens, len(input_ids))
+            chunk_ids = input_ids[start:end]
+            chunk_text = tokenizer.decode(chunk_ids, skip_special_tokens=True, clean_up_tokenization_spaces=True)
+            chunks.append(chunk_text)
+        return chunks
+    
+    # Create chunks centered around target words
+    for idx in target_indices:
+        # Define a window centered around the target index
+        start = max(0, idx - (max_tokens // 2))
+        end = min(len(words), idx + (max_tokens // 2))
+        
+        # Create a chunk around the target word
+        chunk = " ".join(words[start:end])
+        
+        # Ensure chunk does not exceed token limit
+        while len(tokenizer(chunk)['input_ids']) > max_tokens and (end - start) > 1:
+            start += 1
+            end -= 1
+            chunk = " ".join(words[start:end])
 
-        if end == len(input_ids):
-            break
-        start += max_tokens - overlap
-    
+        chunks.append(chunk)
+
     return chunks
 
-# function to find the recognizable location closest to the words 'rixe' or 'bagarre'
+# Function to find the closest location entity to 'rixe' or 'bagarre'
 def find_closest_location(text):
-    target_words = ['rixe', 'bagarre']
-    chunks = tokenize_to_chunks(text)
+    chunks = anchor_chunks(text)
 
     all_location_entities = []
 
@@ -46,7 +61,7 @@ def find_closest_location(text):
 
     if all_location_entities:
         words = text.split()
-        target_positions = [i for i, word in enumerate(words) if word.lower() in target_words]
+        target_positions = [i for i, word in enumerate(words) if word.lower() in TARGET_WORDS]
 
         if target_positions:
             closest_location = None
@@ -66,15 +81,16 @@ def find_closest_location(text):
                         min_distance = distance
                         closest_location = entity['text']
 
-            return closest_location if closest_location else "No location found"
+            return closest_location if closest_location else ""
 
-    return "No location found"
+    return ""
 
+# Function to process the CSV file
 def process_csv(input_csv, output_csv):
     df = pd.read_csv(input_csv)
     df['closest_location'] = df['text'].apply(find_closest_location)
     df.to_csv(output_csv, index=False)
-    print(f"Saved to {output_csv}")
+    print(f"✅ Saved to {output_csv}")
 
-# execution
-process_csv('data/sample_for_bert.csv', 'data/sample_with_closest_location_gliner.csv')
+# Run the CSV processing
+process_csv('data/sample_for_bert.csv', 'data/gliner_closest.csv')
