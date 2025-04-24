@@ -26,20 +26,6 @@ def split_text(text, max_tokens=384):
     chunks = []
     current_chunk = []
 
-    # for word in words:
-    #     current_chunk.append(word)
-    #     tokenized = tokenizer(" ".join(current_chunk), truncation=False, add_special_tokens=False)
-    #     if len(tokenized["input_ids"]) > max_tokens:
-    #         # Remove the last word and save the chunk
-    #         current_chunk.pop()
-    #         chunks.append(" ".join(current_chunk))
-    #         current_chunk = [word]
-
-    # if current_chunk:
-    #     chunks.append(" ".join(current_chunk))
-
-    # return chunks
-
     for sentence in sentences:
         tentative = current_chunk + " " + sentence if current_chunk else sentence
         tokenized = tokenizer(tentative, truncation=False, add_special_tokens=False)
