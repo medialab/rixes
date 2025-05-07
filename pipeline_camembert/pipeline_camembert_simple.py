@@ -87,6 +87,7 @@ def evaluate(df_final):
     print(f"Précision : {precision:.2f}")
     print(f"Rappel    : {recall:.2f}")
 
+# execution
 if __name__ == "__main__":
     input_csv = "data/annotated_dataset_deduped.csv"
     output_csv = "data/camembert_combined_eval.csv"
