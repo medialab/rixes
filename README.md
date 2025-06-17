@@ -1,24 +1,14 @@
-# Analyse du traitement des rixes dans le corpus Retronews
+# Analyse du traitement des événements dans la presse régionale entre 1870 et 1914
 
-## Etape 1 - Echantillonnage
-Prendre un échantillon du fichier contenant les extraits de presse contenant les mots 'rixe' et 'italien'.
+## /explore
+Dossier contenant les scripts d'exploration du corpus océrisé :
+* Echantillonnage d'extraits du corpus autour du mot 'rixe' et des mots relatifs à la nationalité des étrangers concernés (italiens/belges).
+* Pre-processing de l'échantillon pour annotation manuelle (ajout colonnes location_ville et location_region, en_france, participants).
 
-## Etape 2 - Annotation
-### Sous-étape 1 - Modification et ajout des colonnes pour annotation
-Scinder la colonne location en deux :
-* location_ville
-* location_region
+## /ner
+Dossier contenant les scripts de Named Entity Recognition réalisés avec le modèle camembert-ner.
+* Scripts d'extraction des entités LOC (deux méthodes : une méthode avec un ancrage des chunks autour de mots clés comme rixe et bagarre et une méthode sans encrage).
+* Script d'extraction avec évaluation des résultats calculée à partir de l'échantillon annoté.
 
-Ajouter des colonnes :
-* en_france -> 0 (non) ou 1 (oui)
-* xenophobe -> 0 (non) ou 1 (oui)
-* participants -> EE (étranger-étranger), EF (étranger-français), FF (français-français), NA (non-applicable)
-
-### Sous-étape 2 - Annotation manuelle de l'échantillon de 250 lignes
-Annoter manuellement l'échantillon pour les colonnes :
-* location_ville
-* location_region
-* description_of_event
-* en_france
-* xenophobe
-* participants
+## /stats
+Dossier contenant un notebook permettant d'extraire des statistiques pour comparer les datasets.
