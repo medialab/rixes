@@ -1,14 +1,33 @@
-# Analyse du traitement des événements dans la presse régionale entre 1870 et 1914
+# Analysis of Xenophobic Events in French Regional Press (1870-1914)
 
-## /explore
-Dossier contenant les scripts d'exploration du corpus océrisé :
-* Echantillonnage d'extraits du corpus autour du mot 'rixe' et des mots relatifs à la nationalité des étrangers concernés (italiens/belges).
-* Pre-processing de l'échantillon pour annotation manuelle (ajout colonnes location_ville et location_region, en_france, participants).
+This repository contains scripts used to analyze xenophobic events targeted at Italian and Belgian people in the French regional press from 1870 to 1914.
 
-## /ner
-Dossier contenant les scripts de Named Entity Recognition réalisés avec le modèle camembert-ner.
-* Scripts d'extraction des entités LOC (deux méthodes : une méthode avec un ancrage des chunks autour de mots clés comme rixe et bagarre et une méthode sans encrage).
-* Script d'extraction avec évaluation des résultats calculée à partir de l'échantillon annoté.
+## Repository structure
+   Folder | Description |
+ |--------|-------------|
+ | `rixes` | Main folder containing all subfolders. |
+ | `rixes/dataviz` | Contains scripts used to create visualizations of data processing results. |
+ | `rixes/explore` | Contains scripts used to explore datasets. |
+ | `rixes/ner` | Contains scripts used to perform Named Entity Recognition (NER) for location entities. |
+ | `rixes/explode_archives` | Contains a shell script to process a dataset created manually with archival sources. |
+ | `rixes/stats` | Contains scripts and a Jupyter notebook to get statistical information on the datasets used. |
 
-## /stats
-Dossier contenant un notebook permettant d'extraire des statistiques pour comparer les datasets.
+### rixes/explore
+* sample_rixe.py
+    As explained in extract_and_sample_rixes.md, this script samples the dataset extracted with the rixe keyword.
+
+### rixes/dataviz
+* events_repartition.py 
+    This script produces a plot which shows the repartition of events in the archives and retronews datasets.
+* ner_matches.py
+    This script produces a plot which shows the amout of exact and partial matches detected between ground truth locations and locations predicted by a NER model.
+
+### rixes/explode_archives
+* explode_archives.sh
+    This shell script explodes data from the archives dataset and joins it with retronews dataset metadata and 'text' column.
+
+### rixes/ner
+This folder contains GLiNER and camembert-ner pipelines (with and without evaluation with an annotated dataset) for Named Entity Recognition, to detect towns/cities and regions in the articles. 
+
+### rixes/stats
+This folder contains scripts and a Jupyter notebook used to extract statistical data on the retronews and archives datasets.
