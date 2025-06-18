@@ -56,7 +56,7 @@ def process_csv(input_csv, output_csv):
     print(f"Results saved to '{output_csv}'")
     return df_final
 
-
+# execution 
 if __name__ == "__main__":
     input_csv = "data/full.csv"
     output_csv = "data/camembert_full_ner.csv"
