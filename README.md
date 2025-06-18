@@ -14,17 +14,17 @@ This repository contains scripts used to analyze xenophobic events targeted at I
 
 ### rixes/explore
 * sample_rixe.py
-    As explained in extract_and_sample_rixes.md, this script samples the dataset extracted with the rixe keyword.
+    * As explained in extract_and_sample_rixes.md, this script samples the dataset extracted with the rixe keyword.
 
 ### rixes/dataviz
 * events_repartition.py 
-    This script produces a plot which shows the repartition of events in the archives and retronews datasets.
+    * This script produces a plot which shows the repartition of events in the archives and retronews datasets.
 * ner_matches.py
-    This script produces a plot which shows the amout of exact and partial matches detected between ground truth locations and locations predicted by a NER model.
+    * This script produces a plot which shows the amout of exact and partial matches detected between ground truth locations and locations predicted by a NER model.
 
 ### rixes/explode_archives
 * explode_archives.sh
-    This shell script explodes data from the archives dataset and joins it with retronews dataset metadata and 'text' column.
+    * This shell script explodes data from the archives dataset and joins it with retronews dataset metadata and 'text' column.
 
 ### rixes/ner
 This folder contains GLiNER and camembert-ner pipelines (with and without evaluation with an annotated dataset) for Named Entity Recognition, to detect towns/cities and regions in the articles. 
