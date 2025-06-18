@@ -11,6 +11,7 @@ This repository contains scripts used to analyze xenophobic events targeted at I
  | `rixes/ner` | Contains scripts used to perform Named Entity Recognition (NER) for location entities. |
  | `rixes/explode_archives` | Contains a shell script to process a dataset created manually with archival sources. |
  | `rixes/stats` | Contains scripts and a Jupyter notebook to get statistical information on the datasets used. |
+ | `rixes/train_and_test` | Contains scripts used to create testing and training datasets. |
 
 ### rixes/explore
 * sample_rixe.py
