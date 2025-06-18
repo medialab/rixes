@@ -11,3 +11,4 @@ seaborn==0.13.2
 sentence-transformers==4.0.2
 tqdm==4.67.1
 transformers==4.51.1
+instructor==1.7.9
