@@ -6,9 +6,6 @@ tqdm.pandas()
 
 # check if ner prediction for location matches the target location
 def fuzzy_match(predictions, target, max_distance=2):
-    """
-    Check if any prediction matches the target with allowed fuzziness.
-    """
     preds = [p.strip().lower() for p in str(predictions).split('|') if p.strip()]
     target = str(target).strip().lower()
 
