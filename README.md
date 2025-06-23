@@ -12,6 +12,7 @@ This repository contains scripts used to analyze xenophobic events targeted at I
  | `rixes/explode_archives` | Contains a shell script to process a dataset created manually with archival sources. |
  | `rixes/stats` | Contains scripts and a Jupyter notebook to get statistical information on the datasets used. |
  | `rixes/train_and_test` | Contains scripts used to create testing and training datasets. |
+ | `rixes/events` | Contains a script used to evaluate the event overlap between the events found by a finetuned classifier and events already found with previous methods.|
 
 ### rixes/explore
 * sample_rixe.py
@@ -32,3 +33,6 @@ This folder contains GLiNER and camembert-ner pipelines (with and without evalua
 
 ### rixes/stats
 This folder contains scripts and a Jupyter notebook used to extract statistical data on the retronews and archives datasets.
+
+### rixes/events
+Contains a script used to evaluate the event overlap between the events found by a finetuned classifier and events already found with previous methods.
