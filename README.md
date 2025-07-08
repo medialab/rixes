@@ -1,4 +1,4 @@
-# Analysis of Xenophobic Events in French Regional Press (1870-1914)
+# Detecting Xenophobic Events in French Regional Press (1870-1914)
 
 This repository contains scripts used to analyze xenophobic events targeted at Italian and Belgian people in the French regional press from 1870 to 1914.
 
