@@ -5,11 +5,12 @@ from augmentedsocialscientist.models import Camembert
 import os
 from sklearn.metrics import classification_report, confusion_matrix
 
+# use only one gpu
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
 # model
-bert = Camembert(model_name="ccdv/lsg-camembert-base-4096")
+bert = Camembert(model_name="almanach/camembert-large")
 
 # Load and clean train/test
 train = pd.read_csv('data/train_1to3.csv')
@@ -83,7 +84,7 @@ def save_evaluation_results(
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     row = {
         "model": model,
-        "epochs": epochs,
+        "n_epochs": n_epochs,
         "training_data": os.path.basename(training_data) if training_data else "",
         "precision_xeno": precision_xeno,
         "recall_xeno": recall_xeno,
@@ -108,7 +109,7 @@ report_dict = classification_report(test['label'], test['pred_label'], target_na
 # Save to CSV
 save_evaluation_results(
     output_path="data/evaluation_results.csv",
-    model="ccdv/lsg-camembert-base-4096",
+    model=bert.model_name,
     epochs=5,
     training_data="data/train_1to3.csv",
     precision_xeno=report_dict["xeno"]["precision"],
